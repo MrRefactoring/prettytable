@@ -2,12 +2,18 @@
   "name": "prettytable",
   "version": "0.3.1",
   "main": "prettytable.js",
+  "types": "prettytable.d.ts",
   "description": "CLI based Node module for generating pretty tables from multiple data sources",
-  "keywords": ["table", "cli table", "csv", "json"],
+  "keywords": [
+    "table",
+    "cli table",
+    "csv",
+    "json"
+  ],
   "repository": "https://github.com/jyotiska/prettytable",
   "author": "Jyotiska NK <jyotiska123@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "csv-parse": "latest"
+    "csv-parse": "^5.2.2"
   }
 }
