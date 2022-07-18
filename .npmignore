@@ -1,0 +1,12 @@
+node_modules
+tests
+coverage
+.github
+.idea
+
+.eslintrc
+.editorconfig
+.DS_Store
+yarn.lock
+yarn-error.log
+tsconfig.lint.json
