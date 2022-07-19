@@ -1,6 +1,8 @@
+import { Cell } from './cell';
+
 export interface Table {
-  header: (string | number)[];
-  rows: (string | number)[][];
-  footer: (string | number)[];
+  header: Cell[];
+  rows: Cell[][];
+  footer: Cell[];
   maxWidth: number[];
 }

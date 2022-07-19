@@ -89,6 +89,12 @@ This gives you the following table on console:
 
 ### Table methods
 
+###### Note
+
+```ts
+type Cell = string | number | null | undefined;
+```
+
 #### getHeader
 
 Gets header of the table.
@@ -98,7 +104,7 @@ table.getHeader();
 ```
 
 ```ts
-() => (string | number)[];
+() => Cell[];
 ```
 
 #### setHeader
@@ -110,12 +116,12 @@ table.setHeader(['Name', 'Age', 'City']);
 ```
 
 ```ts
-(header: (string | number)[]) => void;
+(header: Cell[]) => void;
 ```
 
-| Argument | Required | Description                       |
-|----------|----------|-----------------------------------|
-| `header` | Yes      | Header to be settled to the table |
+| Argument | Required | Description                           |
+|----------|----------|---------------------------------------|
+| `header` | Yes      | The header to be settled to the table |
 
 #### getFooter
 
@@ -126,7 +132,7 @@ table.getFooter();
 ```
 
 ```ts
-() => (string | number)[];
+() => Cell[];
 ```
 
 #### setFooter
@@ -138,12 +144,12 @@ table.setFooter(['Name', 'Age', 'City']);
 ```
 
 ```ts
-(footer: (string | number)[]) => void;
+(footer: Cell[]) => void;
 ```
 
-| Argument | Required | Description                       |
-|----------|----------|-----------------------------------|
-| `footer` | Yes      | Footer to be settled to the table |
+| Argument | Required | Description                           |
+|----------|----------|---------------------------------------|
+| `footer` | Yes      | The footer to be settled to the table |
 
 
 #### getRows
@@ -155,7 +161,7 @@ table.getRows();
 ```
 
 ```ts
-() => (string | number)[][];
+() => Cell[][];
 ```
 
 #### getRow
@@ -167,12 +173,12 @@ table.getRow(index);
 ```
 
 ```ts
-(index: number) => (string | number)[];
+(index: number) => Cell[];
 ```
 
-| Argument | Required | Description      |
-|----------|----------|------------------|
-| `index`  | Yes      | Index of the row |
+| Argument | Required | Description          |
+|----------|----------|----------------------|
+| `index`  | Yes      | The index of the row |
 
 #### addRows
 
@@ -186,12 +192,12 @@ table.addRows([
 ```
 
 ```ts
-(rows: (string | number)[][]) => void;
+(rows: Cell[][]) => void;
 ```
 
-| Argument | Required | Description  |
-|----------|----------|--------------|
-| `rows`   | Yes      | List of rows |
+| Argument | Required | Description      |
+|----------|----------|------------------|
+| `rows`   | Yes      | The list of rows |
 
 #### addRow
 
@@ -202,12 +208,12 @@ table.addRow(['first row', 'value']);
 ```
 
 ```ts
-(row: (string | number)[]) => void;
+(row: Cell[]) => void;
 ```
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `row`    | Yes      | Row         |
+| `row`    | Yes      | The row     |
 
 #### deleteRow
 
@@ -221,9 +227,9 @@ table.deleteRow(4);
 (index: number) => void;
 ```
 
-| Argument | Required | Description            |
-|----------|----------|------------------------|
-| `index`  | Yes      | Row index for deletion |
+| Argument | Required | Description                |
+|----------|----------|----------------------------|
+| `index`  | Yes      | The row index for deletion |
 
 #### toString
 
@@ -258,7 +264,7 @@ table.toJson();
 ```
 
 ```ts
-() => Record<string | number, string | number>[];
+() => Record<string | number, Cell>[];
 ```
 
 #### clone
@@ -287,17 +293,17 @@ const table = PrettyTable.from(
 
 ```ts
 (
-  header?: (string | number)[] | null,
-  rows?: (string | number)[][] | null,
-  footer?: (string | number)[] | null,
+  header?: Cell[] | null,
+  rows?: Cell[][] | null,
+  footer?: Cell[] | null,
 ) => PrettyTable;
 ```
 
-| Argument | Required | Default | Description         |
-|----------|----------|---------|---------------------|
-| `header` | No       | `null`  | Header of the table |
-| `rows`   | No       | `null`  | List of table rows  |
-| `footer` | No       | `null`  | Footer of the table |
+| Argument | Required | Default | Description             |
+|----------|----------|---------|-------------------------|
+| `header` | No       | `null`  | The header of the table |
+| `rows`   | No       | `null`  | The list of table rows  |
+| `footer` | No       | `null`  | The footer of the table |
 
 #### static fromCsv
 
@@ -311,10 +317,10 @@ const table = PrettyTable.fromCsv(csvFile, { header: true });
 (file: string | Buffer, options?: { header?: boolean; footer?: boolean; }) => PrettyTable;
 ```
 
-| Argument  | Required | Default                           | Description          |
-|-----------|----------|-----------------------------------|----------------------|
-| `file`    | Yes      | N\A                               | Content of CSV       |
-| `options` | No       | `{ header: true, footer: false }` | Options of CSV table |
+| Argument  | Required | Default                           | Description              |
+|-----------|----------|-----------------------------------|--------------------------|
+| `file`    | Yes      | N\A                               | The content of CSV       |
+| `options` | No       | `{ header: true, footer: false }` | The options of CSV table |
 
 #### static fromJson
 
@@ -346,12 +352,12 @@ const table = PrettyTable.fromJson([
 ```
 
 ```ts
-(json: Record<string | number, string | number>[]) => PrettyTable;
+(json: Record<string | number, Cell>[]) => PrettyTable;
 ```
 
-| Argument | Required | Description     |
-|----------|----------|-----------------|
-| `json`   | Yes      | Content of JSON |
+| Argument | Required | Description         |
+|----------|----------|---------------------|
+| `json`   | Yes      | The content of JSON |
 
 ## License
 

@@ -1,6 +1,6 @@
 import { parse } from 'csv-parse/sync';
 import { stringify } from 'csv-stringify/sync';
-import { FromCsvOptions, Table } from './interfaces';
+import { Cell, FromCsvOptions, Table } from './interfaces';
 
 export class PrettyTable {
   private table: Table;
@@ -18,7 +18,7 @@ export class PrettyTable {
     return this.table.header;
   }
 
-  setHeader(header: (string | number)[]) {
+  setHeader(header: Cell[]) {
     this.table.header = header;
 
     this.recalculateMaxWidth(header);
@@ -28,7 +28,7 @@ export class PrettyTable {
     return this.table.footer;
   }
 
-  setFooter(footer: (string | number)[]) {
+  setFooter(footer: Cell[]) {
     this.table.footer = footer;
 
     this.recalculateMaxWidth(footer);
@@ -42,7 +42,7 @@ export class PrettyTable {
     return this.getRows()[index];
   }
 
-  addRows(rows: (string | number)[][]) {
+  addRows(rows: Cell[][]) {
     this.table.rows.push(...rows);
 
     for (const row of rows) {
@@ -50,7 +50,7 @@ export class PrettyTable {
     }
   }
 
-  addRow(row: (string | number)[]) {
+  addRow(row: Cell[]) {
     this.table.rows.push(row);
 
     this.recalculateMaxWidth(row);
@@ -92,8 +92,8 @@ export class PrettyTable {
       headerString += this.table.header[i];
 
       // Adjust for max width of the column and pad spaces
-      if (this.table.header[i].toString().length < this.table.maxWidth[i]) {
-        lengthDifference = this.table.maxWidth[i] - this.table.header[i].toString().length;
+      if (String(this.table.header[i]).length < this.table.maxWidth[i]) {
+        lengthDifference = this.table.maxWidth[i] - String(this.table.header[i]).length;
         headerString += Array(lengthDifference + 1).join(' ');
       }
 
@@ -113,8 +113,8 @@ export class PrettyTable {
         tempRowString += this.table.rows[i][k];
 
         // Adjust max width of each cell and pad spaces as necessary
-        if (this.table.rows[i][k].toString().length < this.table.maxWidth[k]) {
-          lengthDifference = this.table.maxWidth[k] - this.table.rows[i][k].toString().length;
+        if (String(this.table.rows[i][k]).length < this.table.maxWidth[k]) {
+          lengthDifference = this.table.maxWidth[k] - String(this.table.rows[i][k]).length;
           tempRowString += Array(lengthDifference + 1).join(' ');
         }
 
@@ -134,8 +134,8 @@ export class PrettyTable {
       footerString += this.table.footer[i];
 
       // Adjust for max width of the column and pad spaces
-      if (this.table.footer[i].toString().length < this.table.maxWidth[i]) {
-        lengthDifference = this.table.maxWidth[i] - this.table.footer[i].toString().length;
+      if (String(this.table.footer[i]).length < this.table.maxWidth[i]) {
+        lengthDifference = this.table.maxWidth[i] - String(this.table.footer[i]).length;
         footerString += Array(lengthDifference + 1).join(' ');
       }
 
@@ -168,13 +168,13 @@ export class PrettyTable {
       throw new Error('Header should be defined for serializing to JSON');
     }
 
-    const json: Record<string | number, string | number>[] = [];
+    const json: Record<string | number, Cell>[] = [];
 
     for (const row of this.table.rows) {
-      const record: Record<string | number, string | number> = {};
+      const record: Record<string | number, Cell> = {};
 
       for (let i = 0; i < row.length; i++) {
-        const cellName = this.table.header[i];
+        const cellName = String(this.table.header[i]);
 
         record[cellName] = row[i];
       }
@@ -199,7 +199,7 @@ export class PrettyTable {
     return table;
   }
 
-  static from(header: (string | number)[] | null = null, rows: (string | number)[][] | null = null, footer: (string | number)[] | null = null): PrettyTable {
+  static from(header: Cell[] | null = null, rows: Cell[][] | null = null, footer: Cell[] | null = null): PrettyTable {
     const table = new PrettyTable();
 
     table.setHeader(header || []);
@@ -249,7 +249,7 @@ export class PrettyTable {
         table.setHeader(header);
       }
 
-      const row: (string | number)[] = [];
+      const row: Cell[] = [];
 
       for (const key of header) {
         row.push(obj[key]);
@@ -271,14 +271,14 @@ export class PrettyTable {
     return finalLine;
   }
 
-  private recalculateMaxWidth(record: (string | number)[]) {
+  private recalculateMaxWidth(record: Cell[]) {
     if (this.table.maxWidth.length === 0) {
-      this.table.maxWidth.push(...record.map(r => r.toString().length));
+      this.table.maxWidth.push(...record.map(r => String(r).length));
     }
 
     for (let i = 0; i < record.length; i++) {
-      if (record[i].toString().length > this.table.maxWidth[i]) {
-        this.table.maxWidth[i] = record[i].toString().length;
+      if (String(record[i]).length > this.table.maxWidth[i]) {
+        this.table.maxWidth[i] = String(record[i]).length;
       }
     }
   }
